@@ -1,0 +1,2 @@
+/* See github.com/ether/pad for sourcecode */
+

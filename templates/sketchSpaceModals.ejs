@@ -1,0 +1,20 @@
+<% helpers.addBodyClass("tundra"); %>
+<% /*
+ don't use helpers.includeJs here since it will try to compress dojo,
+ which will make dojo unable to know where it's loaded from, and hence
+ how to load more modules
+*/ %>
+<% if (appjet.config.devMode) { %>
+  <script src="/static/js/plugins/sketchSpace/dojo/dojo.js" djConfig="gfxRenderer:'svg,vml,canvas,silverligth'"></script>
+  <script src="/static/js/plugins/sketchSpace/sketchSpaceDesigner/main.js"></script>
+<% } else { %>
+  <script src="/static/js/plugins/sketchSpace/build/dojo/dojo/dojo.js" djConfig="gfxRenderer:'svg,vml,canvas,silverligth'"></script>
+  <script src="/static/js/plugins/sketchSpace/build/dojo/dojo/sketchspace.js"></script>
+<% } %>
+
+<link rel="stylesheet" href="/static/js/plugins/sketchSpace/dijit/themes/tundra/tundra.css" />
+<link rel="stylesheet" href="/static/js/plugins/sketchSpace/dojox/widget/ColorPicker/ColorPicker.css"/>
+<link rel="stylesheet" href="/static/css/plugins/sketchSpace/editor.css"/>
+
+<div id="sketchSpaceEditorUI"></div>
+<div id="sketchSpaceEditorVdraggie"></div>

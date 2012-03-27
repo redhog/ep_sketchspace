@@ -1,0 +1,135 @@
+.noSketchSpace #padpage {
+  left: 50% !important;
+  width: 900px !important;
+}
+
+body {
+  overflow: hidden;
+}
+
+#sketchSpaceEditorUI,
+.sketchSpace.maximized #sketchSpaceEditorUI,
+#sketchSpaceEditorVdraggie,
+.sketchSpace.maximized #sketchSpaceEditorVdraggie {
+  display: none;
+}
+
+.sketchSpace #sketchSpaceEditorUI {
+  display: block;
+}
+
+.sketchSpace #sketchSpaceEditorUI .editorui {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 50%;
+  top: 0;
+  bottom: 20pt;
+  margin-right: 10px;
+}
+
+.sketchSpace.maximized #padpage {
+  left: 8px !important;
+  right: 8px !important;
+  width: auto !important;
+}
+
+.sketchSpace.sketchSpaceMaximized #padpage {
+  display: none;
+}
+.sketchSpace.sketchSpaceMaximized #sketchSpaceEditorVdraggie,
+.mazimized #sketchSpaceEditorVdraggie {
+  display: none;
+}
+
+.sketchSpace #padpage {
+  right: 0px;
+  width: 50%;
+  margin-left: 0;
+  left: auto;
+  bottom: 20pt;
+}
+
+.sketchSpace.sketchSpaceMaximized #sketchSpaceEditorUI .editorui {
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+}
+
+.sketchSpace #sketchSpaceEditBar {
+  position: absolute;
+  left: 0;
+  top: 62px; /* 25 + 6 + 25 + 2 */
+  width: 100%;
+  height: 36px;
+  background: white;
+}
+
+.sketchSpace #sketchSpaceEditor {
+  position: absolute;
+  left: 0;
+  top: 98px; /* 25 + 6 + 25 + 6 + 35 + 1 */
+  bottom: 0;
+  width: 100%;
+  background: white;
+}
+
+.sketchSpace.sketchSpaceMaximized a.topbarmaximize {
+  background: url(/static/img/jun09/pad/maximize_maximized.png);
+}
+
+#sketchSpaceOptions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20pt;
+  background: white;
+  overflow: auto;
+  border-top: 1px solid #C4C4C4;
+  border-right: 1px solid #C4C4C4;
+  padding: 0;
+}
+
+.optionsContainer {
+  vertical-align: middle;
+  height: 100%;
+  line-height: 20pt;
+  display: block;
+  padding-left: 4pt;
+}
+
+.optionsContainer-separator {
+  padding-left: 20pt;
+}
+
+.optionsContainer-option {
+}
+
+.optionsContainer-label,
+.optionsContainer-child {
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1em;
+}
+
+.optionsContainer-label {
+ padding-right: 4pt;
+}
+
+.sketchSpace #sketchSpaceEditorVdraggie {
+  display: block;
+  background: url(/static/img/jun09/pad/vdraggie.gif) no-repeat top center;
+  cursor: W-resize;
+  bottom: 20pt;
+  position:absolute;
+  right:50%;
+  top:62px;
+  width:56px;
+  z-index: 10;
+  margin-right: -22px;
+}
+
+.editbar, .docbar, .topbar {
+  overflow: hidden;
+}
