@@ -1,0 +1,21 @@
+{
+  "parts": [
+    {
+      "name": "sketchspace",
+      "hooks": {
+        "eejsBlock_editbarMenuLeft": "ep_sketchspace/hooks:eejsBlock_editbarMenuLeft",
+        "eejsBlock_modals": "ep_sketchspace/hooks:eejsBlock_modals",
+        "eejsBlock_scripts": "ep_sketchspace/hooks:eejsBlock_scripts",
+        "eejsBlock_styles": "ep_sketchspace/hooks:eejsBlock_styles"
+      },
+      "client_hooks": {
+        "postAceInit": "ep_sketchspace/static/js/main:postAceInit",
+        "aceInitInnerdocbodyHead": "ep_sketchspace/static/js/main:aceInitInnerdocbodyHead",
+        "aceAttribsToClasses": "ep_sketchspace/static/js/main:aceAttribsToClasses",
+        "aceCreateDomLine": "ep_sketchspace/static/js/main:aceCreateDomLine",
+        "incorporateUserChanges": "ep_sketchspace/static/js/main:incorporateUserChanges",
+        "performDocumentApplyChangeset": "ep_sketchspace/static/js/main:performDocumentApplyChangeset"
+      }
+    }
+  ]
+}

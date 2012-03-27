@@ -13,6 +13,8 @@
  * be a ready, rendered image of a single image that is displayed on screen.
  */
 
+var padeditor = require('ep_etherpad-lite/static/js/pad_editor').padeditor;
+
 // IE workaround
 if(!Array.indexOf) {
   Array.prototype.indexOf = function(obj) {
@@ -25,32 +27,62 @@ if(!Array.indexOf) {
   }
 };
 
-function sketchSpaceInit() {
-  this.hooks = ['aceInitInnerdocbodyHead', 'aceAttribsToClasses', 'aceCreateDomLine', 'incorporateUserChanges', 'performDocumentApplyChangeset'];
-};
+exports.waitForAll = function(events, cb) {
+  this.waitFor = events;
+  this.seen = {};
+  this.cb = cb;
+  this.executed = false;
+}
+exports.waitForAll.prototype._executeIfDone = function() {
+  var w = this;
+  if (w.executed) {
+    return;
+  }
+  var done = this.waitFor.map(function (name) {
+    return w.seen[name];
+  }).reduce(function (a, b) { return a && b; }, true);
+  if (done) {
+    w.executed = true;
+    w.cb();
+  }
+}
+exports.waitForAll.prototype.emit = function(event) {
+  this.seen[event] = true;
+  this._executeIfDone();
+}
+
+
+exports.initEditor = new exports.waitForAll(["dojo", "ace"], function () {
+  exports.initEditor.init();
+});
+
+exports.postAceInit = function(hook_name, args, cb) {
+  exports.initEditor.emit("ace");
+  return cb();
+}
 
 /**
  *
  * This hook inserts a bunch of Javascripts and CSS links into the editor iframe. They are used for styling of and making the image icons displayed in the main pad text clickable.
  */
-sketchSpaceInit.prototype.aceInitInnerdocbodyHead = function(args) {
-  args.iframeHTML.push('\'<link rel="stylesheet" type="text/css" href="/static/css/plugins/sketchSpace/ace.css"/>\'');
-  args.iframeHTML.push('\'\\x3cscript type="text/javascript" src="/static/js/jquery-1.3.2.js">\\x3c/script>\'');
-  args.iframeHTML.push('\'\\x3cscript type="text/javascript" src="/static/js/plugins/sketchSpace/ace_inner.js">\\x3c/script>\'');
+exports.aceInitInnerdocbodyHead = function(hook_name, args, cb) {
+  // FIXME: relative paths
+  args.iframeHTML.push('<link rel="stylesheet" type="text/css" href="/static/plugins/ep_sketchspace/static/css/ace.css"/>');
+  args.iframeHTML.push('<script type="text/javascript" src="/static/plugins/ep_sketchspace/static/js/ace_inner.js"></script>');
+  return cb();
 };
 
-sketchSpaceInit.prototype.aceAttribsToClasses = function(args) {
-//  console.log(args.key + ":" + args.value);
+exports.aceAttribsToClasses = function(hook_name, args, cb) {
   if (args.key == 'sketchSpaceIsImage' && args.value != "")
-    return ["sketchSpaceIsImage", "sketchSpaceImageId:" + args.value];
+    return cb(["sketchSpaceIsImage", "sketchSpaceImageId:" + args.value]);
   else if (args.key.indexOf('sketchSpaceImageObject') == 0)
-    return [args.key + ":" + args.value];
+    return cb([args.key + ":" + args.value]);
   else if (args.key.indexOf('sketchSpaceImageZ;')==0)
-    return [args.key + ":" + args.value];
+    return cb([args.key + ":" + args.value]);
   else if (args.key == 'sketchSpaceImageZSequence')
-    return [args.key + ":" + args.value];
+    return cb([args.key + ":" + args.value]);
   else if (args.key == 'sketchSpaceImageIsCurrent')
-    return [args.key + ":" + args.value];
+    return cb([args.key + ":" + args.value]);
 };
 
 /**
@@ -59,7 +91,9 @@ sketchSpaceInit.prototype.aceAttribsToClasses = function(args) {
  * on the pad textual representation of the image.
  * If the updated image is currently displayed, call the updateImageFromPad event handler to update the screen as well.
  */
-sketchSpaceInit.prototype.aceCreateDomLine = function(args) {
+exports.aceCreateDomLine = function(hook_name, args, cb) {
+    if (exports.editorUi === undefined) return cb();
+
   if (args.cls.indexOf('sketchSpaceIsImage') >= 0) {
     var clss = [];
     var imageObjects = {};
@@ -141,45 +175,45 @@ sketchSpaceInit.prototype.aceCreateDomLine = function(args) {
 	}
       }
     }
-    this.editorUi.editor.images[imageId] = {objects:imageObjects, order:order, zSequence: zSequence};
+    exports.editorUi.editor.images[imageId] = {objects:imageObjects, order:order, zSequence: zSequence};
 
     this.currentImage = undefined;
     if (isCurrentImage)
-      this.editorUi.editor.selectSharedImage(imageId);
-    if (this.editorUi.editor.currentImage == imageId) {
-      this.updateImageFromPadIfNeeded();
+      exports.editorUi.editor.selectSharedImage(imageId);
+    if (exports.editorUi.editor.currentImage == imageId) {
+      exports.updateImageFromPadIfNeeded();
     }
 
-    return [{cls: clss.join(" "), extraOpenTags: '', extraCloseTags: ''}];
+    return cb([{cls: clss.join(" "), extraOpenTags: '', extraCloseTags: ''}]);
   }
 };
 
-sketchSpaceInit.prototype.incorporateUserChanges = sketchSpaceInit.prototype.performDocumentApplyChangeset = function () {
-  var sharedImageLink = this.getImageLinkFromId(this.editorUi.editor.currentSharedImage);
+exports.incorporateUserChanges = exports.performDocumentApplyChangeset = function () {
+  var sharedImageLink = this.getImageLinkFromId(exports.editorUi.editor.currentSharedImage);
 
   if (sharedImageLink === undefined || !$(sharedImageLink).hasClass("sketchSpaceImageIsCurrent"))
     this.deselectSharedImage();
-  if (this.getImageLinkFromId(this.editorUi.editor.currentImage) === undefined)
+  if (this.getImageLinkFromId(exports.editorUi.editor.currentImage) === undefined)
     this.deselectImage();
 };
 
-sketchSpaceInit.prototype.updateImageFromPadIfNeeded = function() {
-  if (this.currentImage != this.editorUi.editor.currentImage)
+exports.updateImageFromPadIfNeeded = function() {
+  if (this.currentImage != exports.editorUi.editor.currentImage)
     this.updateImageFromPad();
-  this.currentImage = this.editorUi.editor.currentImage;
+  this.currentImage = exports.editorUi.editor.currentImage;
 };
 
 /**
  *
  */
-sketchSpaceInit.prototype.updateImageFromPad = function() {
-  if (this.editorUi.editor.currentImage !== undefined) {
-    var currentImage = this.editorUi.editor.images[this.editorUi.editor.currentImage].objects;
-    var order = this.editorUi.editor.images[this.editorUi.editor.currentImage].order;
+exports.updateImageFromPad = function() {
+  if (exports.editorUi.editor.currentImage !== undefined) {
+    var currentImage = exports.editorUi.editor.images[exports.editorUi.editor.currentImage].objects;
+    var order = exports.editorUi.editor.images[exports.editorUi.editor.currentImage].order;
 
     /* Some debug info printing:
     console.log("Image:");
-    sketchSpace.editorUi.editor.forEachObjectShape(function (shape) { console.log(shape.objId); })
+    exports.editorUi.editor.forEachObjectShape(function (shape) { console.log(shape.objId); })
     console.log("Pad:");
     for (name in currentImage)
       console.log(name);
@@ -189,7 +223,7 @@ sketchSpaceInit.prototype.updateImageFromPad = function() {
     var toDelete = {};
 
     // Mark all changed/deleted shapes for delation
-    this.editorUi.editor.forEachObjectShape(function (shape) {
+    exports.editorUi.editor.forEachObjectShape(function (shape) {
       if (currentImage[shape.objId] === undefined) {
         toDelete[shape.objId] = shape;
       } else {
@@ -223,11 +257,11 @@ sketchSpaceInit.prototype.updateImageFromPad = function() {
 	// if stuff changed between the loop above and this function.
         var obj = dojo.fromJson(objStr);
 
-	var parent = sketchSpace.editorUi.editor.surface_transform;
+	var parent = exports.editorUi.editor.surface_transform;
 	if (obj.parent) parent = materialize(obj.parent);
 
-        var shape = sketchSpace.editorUi.editor.deserializeShape(parent, obj.shape);
-	sketchSpace.editorUi.editor.registerObjectShape(shape);
+        var shape = exports.editorUi.editor.deserializeShape(parent, obj.shape);
+	exports.editorUi.editor.registerObjectShape(shape);
 
         shape.objId = objId;
         shape.strRepr = objStr;
@@ -247,16 +281,16 @@ sketchSpaceInit.prototype.updateImageFromPad = function() {
       }
       );
 
-    this.editorUi.editor.imageUpdatedByOthers();
+    exports.editorUi.editor.imageUpdatedByOthers();
   }
 };
 
-sketchSpaceInit.prototype.updatePadFromImage = function() {
-  if (this.editorUi.editor.currentImage !== undefined) {
-    var currentImageId = this.editorUi.editor.currentImage;
-    var currentImage = this.editorUi.editor.images[currentImageId].objects;
-    var oldOrder=this.editorUi.editor.images[currentImageId].order;
-    var zSequence=this.editorUi.editor.images[currentImageId].zSequence;
+exports.updatePadFromImage = function() {
+  if (exports.editorUi.editor.currentImage !== undefined) {
+    var currentImageId = exports.editorUi.editor.currentImage;
+    var currentImage = exports.editorUi.editor.images[currentImageId].objects;
+    var oldOrder=exports.editorUi.editor.images[currentImageId].order;
+    var zSequence=exports.editorUi.editor.images[currentImageId].zSequence;
 
     var visited = {};
     var update = [];
@@ -275,7 +309,7 @@ sketchSpaceInit.prototype.updatePadFromImage = function() {
 	  );
 
     var shapeIdx=0;
-    this.editorUi.editor.forEachObjectShape(function (shape) {
+    exports.editorUi.editor.forEachObjectShape(function (shape) {
       newOrder.push(shape.objId);
       if(shape.zOrderMoved){
 	shape.zOrderMoved = undefined;
@@ -322,7 +356,7 @@ sketchSpaceInit.prototype.updatePadFromImage = function() {
       update.push(diff);
     }
 
-    if (zSequence != this.editorUi.editor.images[currentImageId].zSequence) {
+    if (zSequence != exports.editorUi.editor.images[currentImageId].zSequence) {
       update.push(["sketchSpaceImageZSequence", "" + zSequence]);
     }
 
@@ -331,18 +365,18 @@ sketchSpaceInit.prototype.updatePadFromImage = function() {
   }
 };
 
-sketchSpaceInit.prototype.updatePad = function (imageId, update) {
+exports.updatePad = function (imageId, update) {
   var sketchSpace = this;
   padeditor.ace.callWithAce(function (ace) {
     sketchSpace.ace_updatePad(ace, imageId, update);
   }, "updatePadFromImage", true);
 };
 
-sketchSpaceInit.prototype.getImageLinkFromId = function (imageId) {
+exports.getImageLinkFromId = function (imageId) {
   return $($($("#editorcontainer iframe")[0].contentDocument).find("body iframe")[0].contentDocument).find(".sketchSpaceImageId_" + imageId)[0];
 };
 
-sketchSpaceInit.prototype.getImageIdFromLink = function (imageLink) {
+exports.getImageIdFromLink = function (imageLink) {
   var imageId;
   $.each($(imageLink).attr('class').split(' '), function (idx, cls) {
     var parts = cls.split("_");
@@ -352,22 +386,22 @@ sketchSpaceInit.prototype.getImageIdFromLink = function (imageLink) {
   return imageId;
 };
 
-sketchSpaceInit.prototype.imageLinkClicked = function(imageLink) {
+exports.imageLinkClicked = function(imageLink) {
   var imageId = this.getImageIdFromLink(imageLink);
 
-  if (this.editorUi.editor.currentImage == imageId)
+  if (exports.editorUi.editor.currentImage == imageId)
     this.userDeselectImage();
   else
     this.userSelectImage(imageId);
 };
 
-sketchSpaceInit.prototype.userSelectImage = function(imageId) {
-  if (typeof(pad) != "undefined" && this.editorUi.editor.options.shareCurrentImage) {
-    if (this.editorUi.editor.currentSharedImage != imageId) {
+exports.userSelectImage = function(imageId) {
+  if (typeof(pad) != "undefined" && exports.editorUi.editor.options.shareCurrentImage) {
+    if (exports.editorUi.editor.currentSharedImage != imageId) {
       var sketchSpace = this;
 
-      if (this.editorUi.editor.currentSharedImage !== undefined)
-	this.updatePad(sketchSpace.editorUi.editor.currentSharedImage, [["sketchSpaceImageIsCurrent", ""]]);
+      if (exports.editorUi.editor.currentSharedImage !== undefined)
+	this.updatePad(exports.editorUi.editor.currentSharedImage, [["sketchSpaceImageIsCurrent", ""]]);
 
       this.updatePad(imageId, [["sketchSpaceImageIsCurrent", "true"]]);
 
@@ -386,52 +420,54 @@ sketchSpaceInit.prototype.userSelectImage = function(imageId) {
   }
 };
 
-sketchSpaceInit.prototype.userDeselectImage = function() {
+exports.userDeselectImage = function() {
 };
 
-sketchSpaceInit.prototype.selectImage = function(imageId) {
-  this.editorUi.editor.selectImage(imageId);
+exports.selectImage = function(imageId) {
+  exports.editorUi.editor.selectImage(imageId);
   this.updateImageFromPad();
 };
 
-sketchSpaceInit.prototype.userDeselectImage = function () {
-  if (typeof(pad) != "undefined" && this.editorUi.editor.options.shareCurrentImage) {
-    if (this.editorUi.editor.currentSharedImage !== undefined)
-      this.updatePad(sketchSpace.editorUi.editor.currentSharedImage, [["sketchSpaceImageIsCurrent", ""]]);
+exports.userDeselectImage = function () {
+  if (typeof(pad) != "undefined" && exports.editorUi.editor.options.shareCurrentImage) {
+    if (exports.editorUi.editor.currentSharedImage !== undefined)
+      this.updatePad(exports.editorUi.editor.currentSharedImage, [["sketchSpaceImageIsCurrent", ""]]);
   } else {
     this.deselectImage();
   }
 };
 
-sketchSpaceInit.prototype.deselectImage = function () {
+exports.deselectImage = function () {
   this.currentImage = undefined;
-  this.editorUi.editor.deselectImage();
+  exports.editorUi.editor.deselectImage();
 };
 
-sketchSpaceInit.prototype.deselectSharedImage = function () {
-  this.editorUi.editor.deselectSharedImage();
+exports.deselectSharedImage = function () {
+  exports.editorUi.editor.deselectSharedImage();
 };
 
-sketchSpaceInit.prototype.insertImage = function() {
+exports.insertImage = function() {
   var sketchSpace = this;
+
+    xyzzy = 1;
 
   return padeditor.ace.callWithAce(function (ace) {
     return sketchSpace.ace_insertImage(ace);
   }, "sketchSpace", true);
 };
 
-sketchSpaceInit.prototype.ace_getImageRange = function (ace, imageId) {
+exports.ace_getImageRange = function (ace, imageId) {
   var imageLink = this.getImageLinkFromId(imageId);
   return [ace.ace_getLineAndCharForPoint({node: imageLink, index:0, maxIndex:1}),
 	  ace.ace_getLineAndCharForPoint({node: imageLink, index:1, maxIndex:1})];
 };
 
-sketchSpaceInit.prototype.ace_updatePad = function (ace, imageId, update) {
+exports.ace_updatePad = function (ace, imageId, update) {
   var imageRange = this.ace_getImageRange(ace, imageId);
   ace.ace_performDocumentApplyAttributesToRange(imageRange[0], imageRange[1], update);
 };
 
-sketchSpaceInit.prototype.ace_insertImage = function(ace) {
+exports.ace_insertImage = function(ace) {
   var imageId = dojox.uuid.generateRandomUuid();
   rep = ace.ace_getRep();
 
@@ -441,6 +477,3 @@ sketchSpaceInit.prototype.ace_insertImage = function(ace) {
 
   return imageId;
 };
-
-/* used on the client side only */
-sketchSpace = new sketchSpaceInit();

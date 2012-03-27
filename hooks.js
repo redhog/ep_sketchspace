@@ -1,20 +1,21 @@
-import("etherpad.log");
-import("faststatic");
-import("etherpad.utils.*");
-import("etherpad.globals.*");
-import("dispatch.{Dispatcher,PrefixMatcher,forward}");
-import("etherpad.helpers");
+eejs = require("ep_etherpad-lite/node/eejs");
 
-function editBarItemsLeftPad(arg) {
-  return arg.template.include('sketchSpaceEditbarButtons.ejs', undefined, ['sketchSpace']);
+exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceEditbarButtons.ejs");
+  return cb();
 }
 
-function editBarItemsLeftPadView(arg) {
-  helpers.includeCss("plugins/sketchSpace/ace.css");
-  helpers.includeJs("plugins/sketchSpace/ace_inner.js");
+exports.eejsBlock_modals = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceModals.ejs");
+  return cb();
 }
 
+exports.eejsBlock_scripts = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceScripts.ejs");
+  return cb();
+}
 
-function modals(arg) {
-  return arg.template.include('sketchSpaceModals.ejs', undefined, ['sketchSpace']);
+exports.eejsBlock_styles = function (hook_name, args, cb) {
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceStyles.ejs");
+  return cb();
 }

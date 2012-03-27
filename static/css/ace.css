@@ -1,5 +1,5 @@
 .sketchSpaceIsImage {
-  background: url("/static/html/plugins/sketchSpace/icon.png") repeat scroll 0 0 transparent;
+  background: url("../html/icon.png") repeat scroll 0 0 transparent;
   display: inline-block;
   font-size: 0;
   height: 32px;

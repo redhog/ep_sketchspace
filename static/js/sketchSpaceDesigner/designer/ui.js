@@ -12,67 +12,54 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
   widgetsInTemplate: true,
   templateString: '<div>' +
                   '  <div class="editorui">' +
-                  '    <div class="topbar">' +
-                  '      <div class="topbarleft"><!-- --></div>' +
-                  '      <div class="topbarright"><!-- --></div>' +
-                  '      <div class="topbarcenter">' +
-                  '        <a href="http://github.com/redhog/pad" class="topbarBrand">SketchSpace</a>' +
-                  '        <div class="fullscreen" dojoAttachEvent="onclick:_onMaximize">Full screen</div>' +
-                  '        <a href="javascript:void(0);" dojoAttachEvent="onclick:_onMaximize" class="topbarmaximize" title="Toggle maximization"></a>' +
-                  '      </div>' +
-                  '      <div class="specialkeyarea"><!-- --></div>' +
-                  '    </div>' +
-                  '    <div id="sketchSpaceDocbar" class="menu docbar docbar-public">' +
-                  '      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="docbartable" class="docbartable">' +
-                  '        <tbody><tr>' +
-                  '          <td><img src="/static/img/jun09/pad/roundcorner_left.gif"></td>' +
-                  '          <td width="100%">&nbsp;</td>' +
-                  '          <td class="docbarbutton"><a dojoAttachPoint="addImgButton">Add PDF background</a></td>' +
-                  '          <td class="docbarbutton">Sync view: <div dojoAttachPoint="shareCurrentImageOptionDiv"></div></td>' +
-                  '          <td class="docbarbutton">Authorship colors: <div dojoAttachPoint="showAuthorshipColorOptionDiv"></div></td>' +
-                  '          <td><img src="/static/img/jun09/pad/roundcorner_right_orange.gif"></td>' +
-                  '        </tbody>' +
-                  '      </table>' +
-                  '    </div>' +
-                  '    <div id="sketchSpaceEditBar" dojoAttachPoint="toolbar">' +
-                  '      <div class="editbar enabledtoolbar" id="editbar">' +
-                  '        <div class="editbarinner" id="editbarinner">' +
-                  '          <div class="editbarleft" id="editbarleft"><!-- --></div>' +
-                  '          <div class="editbarright" id="editbarright"><!-- --></div>      ' +
-                  '          <div class="editbarinner" id="editbarinner">' +
-                  '            <table border="0" cellspacing="0" cellpadding="0" class="editbartable" id="editbartable">' +
-                  '              <tbody><tr class="tools">' +
-                  '' +
-                  '                <td><img height="24" width="2" src="/static/img/jun09/pad/editbar_groupleft.gif"></td>' +
-                  '                <td class="editbarbutton editbargroupsfirst tool addEllipse" unselectable="on" dojoAttachEvent="onclick:_onAddEllipse"><img title="Add ellipse" src="/static/html/plugins/sketchSpace/imgeditbar_add_circle_icon.png"></td>' +
-                  '                <td class="editbarbutton tool addPath" unselectable="on" dojoAttachEvent="onclick:_onAddPath"><img title="Add path" src="/static/html/plugins/sketchSpace/imgeditbar_add_line_icon.png"></td>' +
-                  '                <td class="editbarbutton tool addPathFreehand" unselectable="on" dojoAttachEvent="onclick:_onAddPathFreehand"><img title="Add freehand path" src="/static/html/plugins/sketchSpace/imgeditbar_add_path_freehand_icon.png"></td>' +
-                  '                <td class="editbarbutton tool addPathPolyline" unselectable="on" dojoAttachEvent="onclick:_onAddPathPolyline"><img title="Add polyline path" src="/static/html/plugins/sketchSpace/imgeditbar_add_path_polyline_icon.png"></td>' +
-                  '                <td class="editbarbutton tool addRect" unselectable="on" dojoAttachEvent="onclick:_onAddRect"><img title="Add rectangle" src="/static/html/plugins/sketchSpace/imgeditbar_add_rect_icon.png"></td>' +
-                  '                <td><img height="24" width="2" src="/static/img/jun09/pad/editbar_groupright.gif"></td>' +
-                  '' +
-                  '                <td width="100%">&nbsp;</td>' +
-                  '' +
-                  '              </tr></tbody>' +
-                  '            </table>' +
-                  '            <table border="0" cellspacing="0" cellpadding="0" class="editbarsavetable" id="editbarsavetable">' +
-                  '              <tbody><tr>' +
-                  '' +
-                  '                <td><img height="24" width="2" src="/static/img/jun09/pad/editbar_groupleft.gif"></td>' +
-                  '                <td class="editbarbutton editbargroupsfirst tool select" unselectable="on" dojoAttachEvent="onclick:_onSelect"><img title="Select objects" src="/static/html/plugins/sketchSpace/imgeditbar_select_icon.png"></td>' +
-                  '                <td class="editbarbutton tool pan" unselectable="on" dojoAttachEvent="onclick:_onPan"><img title="Pan" src="/static/html/plugins/sketchSpace/imgeditbar_pan_icon.png"></td>' +
-                  '                <td class="editbarbutton tool zoomIn" unselectable="on" dojoAttachEvent="onclick:_onZoomIn"><img title="Zoom in" src="/static/html/plugins/sketchSpace/imgeditbar_zoom_in_icon.png"></td>' +
-                  '                <td class="editbarbutton" unselectable="on" dojoAttachEvent="onclick:_onZoomDefault"><img title="Zoom to default" src="/static/html/plugins/sketchSpace/imgeditbar_zoom_default_icon.png"></td>' +
-                  '                <td class="editbarbutton tool zoomOut" unselectable="on" dojoAttachEvent="onclick:_onZoomOut"><img title="Zoom out" src="/static/html/plugins/sketchSpace/imgeditbar_zoom_out_icon.png"></td>' +
-                  '                <td><img height="24" width="2" src="/static/img/jun09/pad/editbar_groupright.gif"></td>' +
-                  '' +
-//                '                <td>&nbsp;</td>' +
-                  '' +
-                  '              </tr></tbody>' +
-                  '            </table>' +
-                  '          </div>' +
-                  '        </div>' +
-                  '      </div>' +
+                  '    <div id="editbar" class="enabledtoolbar">' +
+                  '      <ul id="menu_left">' +
+                  '        <li id="addImage" dojoAttachPoint="addImgButton">' +
+                  '          <a class="buttonicon buttonicon-addimage" title="Add image"></a>' +
+                  '        </li>' +
+                  '        <li id="addEllipse" dojoAttachEvent="onclick:_onAddEllipse">' +
+                  '          <a class="buttonicon buttonicon-addellipse" title="Add ellipse"></a>' +
+                  '        </li>' +
+                  '        <li id="addPath" dojoAttachEvent="onclick:_onAddPath">' +
+                  '          <a class="buttonicon buttonicon-addpath" title="Add path"></a>' +
+                  '        </li>' +
+                  '        <li id="addPathFreehand" dojoAttachEvent="onclick:_onAddPathFreehand">' +
+                  '          <a class="buttonicon buttonicon-addpathfreehand" title="Add path freehand"></a>' +
+                  '        </li>' +
+                  '        <li id="addPathPolyline" dojoAttachEvent="onclick:_onAddPathPolyline">' +
+                  '          <a class="buttonicon buttonicon-addpathpolyline" title="Add path polyline"></a>' +
+                  '        </li>' +
+                  '        <li id="addRect" dojoAttachEvent="onclick:_onAddRect">' +
+                  '          <a class="buttonicon buttonicon-addrect" title="Add rect"></a>' +
+                  '        </li>' +
+                  '        <li class="separator"></li>' +
+                  '        <li id="pan" dojoAttachEvent="onclick:_onPan">' +
+                  '          <a class="buttonicon buttonicon-pan" title="Pan"></a>' +
+                  '        </li>' +
+                  '        <li id="zoomIn" dojoAttachEvent="onclick:_onZoomIn">' +
+                  '          <a class="buttonicon buttonicon-zoomin" title="Zoom in"></a>' +
+                  '        </li>' +
+                  '        <li id="zoomDefault" dojoAttachEvent="onclick:_onZoomDefault">' +
+                  '          <a class="buttonicon buttonicon-zoomdefault" title="Zoom default"></a>' +
+                  '        </li>' +
+                  '        <li id="zoomOut" dojoAttachEvent="onclick:_onZoomOut">' +
+                  '          <a class="buttonicon buttonicon-zoomout" title="Zoom out"></a>' +
+                  '        </li>' +
+                  '      </ul>' +
+                  '      <ul id="menu_right">' +
+                  '        <li id="syncView">' +
+                  '          Sync view: <div dojoAttachPoint="shareCurrentImageOptionDiv"></div>' +
+                  '        </li>' +
+                  '        <li id="authorshipColors">' +
+                  '          Authorship colors: <div dojoAttachPoint="showAuthorshipColorOptionDiv"></div>' +
+                  '        </li>' +
+                  '        <li id="maximize" onclick="_onMaximize();return false;">' +
+                  '            <a class="buttonicon buttonicon-maximize" title="Maximize"></a>' +
+                  '        </li>' +
+                  '        <li>' +
+                  '            <a class="" title="About SketchSpace" href="http://github.com/redhog/pad">SketchSpace</a>' +
+                  '        </li>' +
+                  '      </ul>' +
                   '    </div>' +
                   '    <div id="sketchSpaceEditor" dojoAttachPoint="editorArea"></div>' +
                   '  </div>' +

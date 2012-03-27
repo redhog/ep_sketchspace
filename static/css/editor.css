@@ -11,7 +11,7 @@ body {
 .sketchSpace.maximized #sketchSpaceEditorUI,
 #sketchSpaceEditorVdraggie,
 .sketchSpace.maximized #sketchSpaceEditorVdraggie {
-  display: none;
+//  display: none;
 }
 
 .sketchSpace #sketchSpaceEditorUI {
@@ -132,4 +132,38 @@ body {
 
 .editbar, .docbar, .topbar {
   overflow: hidden;
+}
+
+
+
+/* Etherpad-lite stuff */
+
+.buttonicon-addimage { background: url(../html/imgeditbar_add_img_icon.png); }
+.buttonicon-addellipse { background: url(../html/imgeditbar_add_ellipse_icon.png); }
+.buttonicon-addpath { background: url(../html/imgeditbar_add_path_polyline_icon.png); }
+.buttonicon-addpathfreehand { background: url(../html/imgeditbar_add_path_freehand_icon.png); }
+.buttonicon-addpathpolyline { background: url(../html/imgeditbar_add_path_polyline_icon.png); }
+.buttonicon-addrect { background: url(../html/imgeditbar_add_rect_icon.png); }
+.buttonicon-pan { background: url(../html/imgeditbar_pan_icon.png); }
+.buttonicon-zoomin { background: url(../html/imgeditbar_zoom_in_icon.png); }
+.buttonicon-zoomdefault { background: url(../html/imgeditbar_zoom_default_icon.png); }
+.buttonicon-zoomout { background: url(../html/imgeditbar_zoom_out_icon.png); }
+
+#sketchSpaceEditorUI {
+display: block;
+position: absolute;
+left: 50%;
+right: 0;
+top: 0;
+bottom: 0;
+z-index: 50;
+background: red;
+}
+
+#sketchSpaceEditor {
+position: absolute;
+top: 32px;
+bottom: 0;
+left: 0;
+right: 0;
 }
