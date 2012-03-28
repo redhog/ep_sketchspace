@@ -1,59 +1,42 @@
-.noSketchSpace #padpage {
-  left: 50% !important;
-  width: 900px !important;
-}
-
 body {
   overflow: hidden;
 }
 
-#sketchSpaceEditorUI,
-.sketchSpace.maximized #sketchSpaceEditorUI,
-#sketchSpaceEditorVdraggie,
-.sketchSpace.maximized #sketchSpaceEditorVdraggie {
-//  display: none;
+.sketchSpaceEditorUI,
+.sketchSpace.maximized .sketchSpaceEditorUI {
+  display: none;
 }
 
-.sketchSpace #sketchSpaceEditorUI {
+.sketchSpace .sketchSpaceEditorUI {
   display: block;
 }
 
-.sketchSpace #sketchSpaceEditorUI .editorui {
+.sketchSpace .sketchSpaceEditorUI {
   display: block;
   position: absolute;
   left: 0;
   right: 50%;
   top: 0;
-  bottom: 20pt;
-  margin-right: 10px;
+  bottom: 0;
 }
 
-.sketchSpace.maximized #padpage {
-  left: 8px !important;
-  right: 8px !important;
-  width: auto !important;
-}
-
-.sketchSpace.sketchSpaceMaximized #padpage {
-  display: none;
-}
-.sketchSpace.sketchSpaceMaximized #sketchSpaceEditorVdraggie,
-.mazimized #sketchSpaceEditorVdraggie {
+.sketchSpace.maximized #editorcontainerbox {
   display: none;
 }
 
-.sketchSpace #padpage {
-  right: 0px;
-  width: 50%;
-  margin-left: 0;
-  left: auto;
-  bottom: 20pt;
+.sketchSpace.sketchSpaceMaximized #editorcontainerbox {
+  display: none;
 }
 
-.sketchSpace.sketchSpaceMaximized #sketchSpaceEditorUI .editorui {
-  left: 0 !important;
-  right: 0 !important;
-  width: auto !important;
+.sketchSpace #editbar,
+.sketchSpace #editorcontainerbox {
+  left: 50%;
+}
+
+.sketchSpace.sketchSpaceMaximized .sketchSpaceEditorUI {
+  left: 0;
+  right: 0;
+  width: auto;
 }
 
 .sketchSpace #sketchSpaceEditBar {
@@ -68,8 +51,8 @@ body {
 .sketchSpace #sketchSpaceEditor {
   position: absolute;
   left: 0;
-  top: 98px; /* 25 + 6 + 25 + 6 + 35 + 1 */
-  bottom: 0;
+  top: 36px;
+  bottom: 20pt;
   width: 100%;
   background: white;
 }
@@ -117,19 +100,6 @@ body {
  padding-right: 4pt;
 }
 
-.sketchSpace #sketchSpaceEditorVdraggie {
-  display: block;
-  background: url(/static/img/jun09/pad/vdraggie.gif) no-repeat top center;
-  cursor: W-resize;
-  bottom: 20pt;
-  position:absolute;
-  right:50%;
-  top:62px;
-  width:56px;
-  z-index: 10;
-  margin-right: -22px;
-}
-
 .editbar, .docbar, .topbar {
   overflow: hidden;
 }
@@ -149,16 +119,6 @@ body {
 .buttonicon-zoomdefault { background: url(../html/imgeditbar_zoom_default_icon.png); }
 .buttonicon-zoomout { background: url(../html/imgeditbar_zoom_out_icon.png); }
 
-#sketchSpaceEditorUI {
-display: block;
-position: absolute;
-left: 50%;
-right: 0;
-top: 0;
-bottom: 0;
-z-index: 50;
-background: red;
-}
 
 #sketchSpaceEditor {
 position: absolute;

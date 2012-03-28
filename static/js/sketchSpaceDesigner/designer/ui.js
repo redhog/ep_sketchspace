@@ -10,10 +10,9 @@ dojo.require("dijit._Templated");
 
 dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._Templated], {
   widgetsInTemplate: true,
-  templateString: '<div>' +
-                  '  <div class="editorui">' +
-                  '    <div id="editbar" class="enabledtoolbar">' +
-                  '      <ul id="menu_left">' +
+  templateString: '<div class="sketchSpaceEditorUI">' +
+                  '    <div class="toolbar enabledtoolbar">' +
+                  '      <ul class="menu_left">' +
                   '        <li id="addImage" dojoAttachPoint="addImgButton">' +
                   '          <a class="buttonicon buttonicon-addimage" title="Add image"></a>' +
                   '        </li>' +
@@ -46,7 +45,7 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '          <a class="buttonicon buttonicon-zoomout" title="Zoom out"></a>' +
                   '        </li>' +
                   '      </ul>' +
-                  '      <ul id="menu_right">' +
+                  '      <ul class="menu_right">' +
                   '        <li id="syncView">' +
                   '          Sync view: <div dojoAttachPoint="shareCurrentImageOptionDiv"></div>' +
                   '        </li>' +
@@ -62,7 +61,6 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '      </ul>' +
                   '    </div>' +
                   '    <div id="sketchSpaceEditor" dojoAttachPoint="editorArea"></div>' +
-                  '  </div>' +
                   '  <div id="sketchSpaceOptions" dojoType="sketchSpaceDesigner.designer.widgets.OptionsContainer" dojoAttachPoint="options"></div>' +
                   '</div>',
   startup: function () {
