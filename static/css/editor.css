@@ -24,6 +24,7 @@ body {
   display: none;
 }
 
+.sketchSpace.sketchSpaceMaximized #editbar,
 .sketchSpace.sketchSpaceMaximized #editorcontainerbox {
   display: none;
 }
@@ -55,10 +56,6 @@ body {
   bottom: 20pt;
   width: 100%;
   background: white;
-}
-
-.sketchSpace.sketchSpaceMaximized a.topbarmaximize {
-  background: url(/static/img/jun09/pad/maximize_maximized.png);
 }
 
 #sketchSpaceOptions {
@@ -114,16 +111,27 @@ body {
 .buttonicon-addpathfreehand { background: url(../html/imgeditbar_add_path_freehand_icon.png); }
 .buttonicon-addpathpolyline { background: url(../html/imgeditbar_add_path_polyline_icon.png); }
 .buttonicon-addrect { background: url(../html/imgeditbar_add_rect_icon.png); }
+.buttonicon-select { background: url(../html/imgeditbar_select_icon.png); }
 .buttonicon-pan { background: url(../html/imgeditbar_pan_icon.png); }
 .buttonicon-zoomin { background: url(../html/imgeditbar_zoom_in_icon.png); }
 .buttonicon-zoomdefault { background: url(../html/imgeditbar_zoom_default_icon.png); }
 .buttonicon-zoomout { background: url(../html/imgeditbar_zoom_out_icon.png); }
+.buttonicon-insert-image { background: url(../html/editbar_icon.png); }
+.buttonicon-insert-pdf { background: url(../html/editbar_pdf_icon.png); }
+.buttonicon-about { background: url(../html/editbar_icon.png); }
+.buttonicon-maximize { background: url(../html/maximize_normal.png); }
+.sketchSpace.sketchSpaceMaximized .buttonicon-maximize { background: url(../html/maximize_maximized.png); }
 
 
 #sketchSpaceEditor {
-position: absolute;
-top: 32px;
-bottom: 0;
-left: 0;
-right: 0;
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sketchSpaceEditorUI #syncView,
+.sketchSpaceEditorUI #authorshipColors {
+  width: auto;
 }

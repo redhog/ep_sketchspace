@@ -32,6 +32,10 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '          <a class="buttonicon buttonicon-addrect" title="Add rect"></a>' +
                   '        </li>' +
                   '        <li class="separator"></li>' +
+                  '        <li id="select" dojoAttachEvent="onclick:_onSelect">' +
+                  '          <a class="buttonicon buttonicon-select" title="Select objects"></a>' +
+                  '        </li>' +
+                  '        <li class="separator"></li>' +
                   '        <li id="pan" dojoAttachEvent="onclick:_onPan">' +
                   '          <a class="buttonicon buttonicon-pan" title="Pan"></a>' +
                   '        </li>' +
@@ -52,11 +56,11 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '        <li id="authorshipColors">' +
                   '          Authorship colors: <div dojoAttachPoint="showAuthorshipColorOptionDiv"></div>' +
                   '        </li>' +
-                  '        <li id="maximize" onclick="_onMaximize();return false;">' +
+                  '        <li id="maximize" dojoAttachEvent="onclick:_onMaximize">' +
                   '            <a class="buttonicon buttonicon-maximize" title="Maximize"></a>' +
                   '        </li>' +
-                  '        <li>' +
-                  '            <a class="" title="About SketchSpace" href="http://github.com/redhog/pad">SketchSpace</a>' +
+                  '        <li id="about">' +
+                  '            <a class="buttonicon buttonicon-about" title="About SketchSpace" href="http://github.com/redhog/pad"></a>' +
                   '        </li>' +
                   '      </ul>' +
                   '    </div>' +
