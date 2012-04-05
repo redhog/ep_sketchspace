@@ -3,6 +3,7 @@
     {
       "name": "sketchspace",
       "hooks": {
+        "init_ep_sketchspace": "ep_sketchspace/hooks:init",
         "eejsBlock_editbarMenuLeft": "ep_sketchspace/hooks:eejsBlock_editbarMenuLeft",
         "eejsBlock_modals": "ep_sketchspace/hooks:eejsBlock_modals",
         "eejsBlock_scripts": "ep_sketchspace/hooks:eejsBlock_scripts",
