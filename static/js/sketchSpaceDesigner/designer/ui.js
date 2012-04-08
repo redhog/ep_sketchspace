@@ -72,13 +72,13 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
 
     if (typeof(AjaxUpload) != "undefined") {
       var info = {  
-        action: '/ep/fileUpload/',
+        action: '/fileUpload/',
         name: 'uploadfile',  
         onSubmit: function(file, ext){
         //console.log('Starting...');
         },  
         onComplete: function(file, response){
-          var path = eval(response)[0].split("/");
+          var path = response.replace(/^\s+|\s+$/g, '').split("/");
           sketchSpace.editorUi.addImg(path[path.length-1]);
         }
       };

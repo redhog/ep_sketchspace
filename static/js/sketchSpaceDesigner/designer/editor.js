@@ -315,7 +315,7 @@ dojo.declare("sketchSpaceDesigner.designer.editor.Editor", [], {
         image.background = dojox.gfx.utils.deserialize(image, {shape:{type:"rect", x:0, y:0, width:100, height:100}, fill:{r:196,g:196,b:196,a:1}});
       if (this.pointSize === undefined) {
 	dojo.xhrGet({
-	  url: "/ep/imageConvert/" + this.imageName + "?action=getSize&p=" + image.page,
+	  url: "/imageConvert/" + this.imageName + "?action=getSize&p=" + image.page,
 	  handleAs: "json",
 	  load: function(data){
 	    image.pointSize = data;
@@ -364,7 +364,7 @@ dojo.declare("sketchSpaceDesigner.designer.editor.Editor", [], {
 	  y:displayBboxOnObj.y,
 	  width:displayBboxOnObj.width,
 	  height:displayBboxOnObj.height,
-	  src: "/ep/imageConvert/" + this.imageName +
+	  src: "/imageConvert/" + this.imageName +
 	    "?p=" + image.page +
 	    "&x=" + displayBboxOnObj.x +
 	    "&y=" + displayBboxOnObj.y +

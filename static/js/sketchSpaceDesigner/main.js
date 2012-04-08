@@ -18,7 +18,7 @@ sketchSpace.initEditor.init = function () {
 
   if (typeof(pad) != "undefined") {
     var info = {  
-      action: '/ep/fileUpload/',
+      action: '/fileUpload/',
       name: 'uploadfile',  
       onSubmit: function(file, ext){
       //console.log('Starting...');
@@ -28,7 +28,7 @@ sketchSpace.initEditor.init = function () {
 	var filename = path[path.length-1];
 
 	dojo.xhrGet({
-	  url: "/ep/imageConvert/" + filename + "?action=getPages",
+	  url: "/imageConvert/" + filename + "?action=getPages",
 	  handleAs: "json",
 	  load: function(data){
 	    padeditor.ace.callWithAce(function (ace) {
