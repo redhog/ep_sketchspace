@@ -4,22 +4,22 @@ var child_process = require('child_process');
 var path = require('path');
 
 exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceEditbarButtons.ejs");
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceEditbarButtons.ejs", {}, module);
   return cb();
 }
 
 exports.eejsBlock_modals = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceModals.ejs");
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceModals.ejs", {}, module);
   return cb();
 }
 
 exports.eejsBlock_scripts = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceScripts.ejs");
+    args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceScripts.ejs", {}, module);
   return cb();
 }
 
 exports.eejsBlock_styles = function (hook_name, args, cb) {
-  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceStyles.ejs");
+  args.content = args.content + eejs.require("ep_sketchspace/templates/sketchSpaceStyles.ejs", {}, module);
   return cb();
 }
 
