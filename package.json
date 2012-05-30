@@ -1,7 +1,7 @@
 {
   "name": "ep_sketchspace",
   "description": "Drawing and image annotation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "RedHog (Egil Moeller) <egil.moller@freecode.no>",
   "contributors": [],
   "dependencies": {"ep_imageconvert": "latest", "ep_fileupload": "latest"},
