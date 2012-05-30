@@ -14,39 +14,39 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '    <div class="toolbar enabledtoolbar">' +
                   '      <ul class="menu_left">' +
                   '        <li id="addImage" dojoAttachPoint="addImgButton">' +
-                  '          <a class="buttonicon buttonicon-addimage" title="Add image"></a>' +
+                  '          <a title="Add image"><span class="buttonicon buttonicon-addimage"></span></a>' +
                   '        </li>' +
                   '        <li id="addEllipse" dojoAttachEvent="onclick:_onAddEllipse">' +
-                  '          <a class="buttonicon buttonicon-addellipse" title="Add ellipse"></a>' +
+                  '          <a title="Add ellipse"><span class="buttonicon buttonicon-addellipse"></span></a>' +
                   '        </li>' +
                   '        <li id="addPath" dojoAttachEvent="onclick:_onAddPath">' +
-                  '          <a class="buttonicon buttonicon-addpath" title="Add path"></a>' +
+                  '          <a title="Add path"><span class="buttonicon buttonicon-addpath"></span></a>' +
                   '        </li>' +
                   '        <li id="addPathFreehand" dojoAttachEvent="onclick:_onAddPathFreehand">' +
-                  '          <a class="buttonicon buttonicon-addpathfreehand" title="Add path freehand"></a>' +
+                  '          <a title="Add path freehand"><span class="buttonicon buttonicon-addpathfreehand"></span></a>' +
                   '        </li>' +
                   '        <li id="addPathPolyline" dojoAttachEvent="onclick:_onAddPathPolyline">' +
-                  '          <a class="buttonicon buttonicon-addpathpolyline" title="Add path polyline"></a>' +
+                  '          <a title="Add path polyline"><span class="buttonicon buttonicon-addpathpolyline"></span></a>' +
                   '        </li>' +
                   '        <li id="addRect" dojoAttachEvent="onclick:_onAddRect">' +
-                  '          <a class="buttonicon buttonicon-addrect" title="Add rect"></a>' +
+                  '          <a title="Add rect"><span class="buttonicon buttonicon-addrect"></span></a>' +
                   '        </li>' +
                   '        <li class="separator"></li>' +
                   '        <li id="select" dojoAttachEvent="onclick:_onSelect">' +
-                  '          <a class="buttonicon buttonicon-select" title="Select objects"></a>' +
+                  '          <a title="Select objects"><span class="buttonicon buttonicon-select"></span></a>' +
                   '        </li>' +
                   '        <li class="separator"></li>' +
                   '        <li id="pan" dojoAttachEvent="onclick:_onPan">' +
-                  '          <a class="buttonicon buttonicon-pan" title="Pan"></a>' +
+                  '          <a title="Pan"><span class="buttonicon buttonicon-pan"></span></a>' +
                   '        </li>' +
                   '        <li id="zoomIn" dojoAttachEvent="onclick:_onZoomIn">' +
-                  '          <a class="buttonicon buttonicon-zoomin" title="Zoom in"></a>' +
+                  '          <a title="Zoom in"><span class="buttonicon buttonicon-zoomin"></span></a>' +
                   '        </li>' +
                   '        <li id="zoomDefault" dojoAttachEvent="onclick:_onZoomDefault">' +
-                  '          <a class="buttonicon buttonicon-zoomdefault" title="Zoom default"></a>' +
+                  '          <a title="Zoom default"><span class="buttonicon buttonicon-zoomdefault"></span></a>' +
                   '        </li>' +
                   '        <li id="zoomOut" dojoAttachEvent="onclick:_onZoomOut">' +
-                  '          <a class="buttonicon buttonicon-zoomout" title="Zoom out"></a>' +
+                  '          <a title="Zoom out"><span class="buttonicon buttonicon-zoomout"></span></a>' +
                   '        </li>' +
                   '      </ul>' +
                   '      <ul class="menu_right">' +
@@ -57,10 +57,10 @@ dojo.declare("sketchSpaceDesigner.designer.DesignerUI", [dijit._Widget, dijit._T
                   '          Authorship colors: <div dojoAttachPoint="showAuthorshipColorOptionDiv"></div>' +
                   '        </li>' +
                   '        <li id="maximize" dojoAttachEvent="onclick:_onMaximize">' +
-                  '            <a class="buttonicon buttonicon-maximize" title="Maximize"></a>' +
+                  '            <a title="Maximize"><span class="buttonicon buttonicon-maximize"></span></a>' +
                   '        </li>' +
                   '        <li id="about">' +
-                  '            <a class="buttonicon buttonicon-about" title="About SketchSpace" href="http://github.com/redhog/pad"></a>' +
+                  '            <a title="About SketchSpace" href="http://github.com/redhog/pad"><span class="buttonicon buttonicon-about"></span></a>' +
                   '        </li>' +
                   '      </ul>' +
                   '    </div>' +

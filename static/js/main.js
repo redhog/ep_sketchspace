@@ -449,8 +449,6 @@ exports.deselectSharedImage = function () {
 exports.insertImage = function() {
   var sketchSpace = this;
 
-    xyzzy = 1;
-
   return padeditor.ace.callWithAce(function (ace) {
     return sketchSpace.ace_insertImage(ace);
   }, "sketchSpace", true);
