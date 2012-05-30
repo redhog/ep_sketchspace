@@ -31,7 +31,9 @@ body {
 
 .sketchSpace #editbar,
 .sketchSpace #editorcontainerbox {
+  position: absolute;
   left: 50%;
+  width: 50%;
 }
 
 .sketchSpace.sketchSpaceMaximized .sketchSpaceEditorUI {
