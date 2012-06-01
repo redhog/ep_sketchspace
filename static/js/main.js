@@ -177,7 +177,7 @@ exports.aceCreateDomLine = function(hook_name, args, cb) {
     }
     exports.editorUi.editor.images[imageId] = {objects:imageObjects, order:order, zSequence: zSequence};
 
-    this.currentImage = undefined;
+    exports.currentImage = undefined;
     if (isCurrentImage)
       exports.editorUi.editor.selectSharedImage(imageId);
     if (exports.editorUi.editor.currentImage == imageId) {
