@@ -4,6 +4,6 @@
   "version": "0.0.6",
   "author": "RedHog (Egil Moeller) <egil.moller@freecode.no>",
   "contributors": [],
-  "dependencies": {"ep_imageconvert": "latest", "ep_fileupload": "latest"},
+  "dependencies": {},
   "engines": { "node": ">= 0.4.1 < 0.7.0" }
 }
