@@ -114,9 +114,7 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.TableContainer", [dojox.layou
 });
 
 
-
-
-dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [dijit.layout._LayoutWidget], {
+dojo.declare("sketchSpaceDesigner.designer.widgets.ListContainer", [dijit.layout._LayoutWidget], {
 	postCreate: function(){
 		this.inherited(arguments);
 		this._children = [];
@@ -146,29 +144,48 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [dijit.lay
 		});
 	},
 
+        wrapperClass: "listContainer",
+        separatorClass: "listContainer-separator",
+        itemWrapperClass: "listContainer-option",
+        labelClass: "listContainer-label",
+        childClass: "listContainer-child",
+
+        wrapper: function () {
+	        this.wrapperContainer = dojo.create("div", {"class": this.wrapperClass}, this.domNode);
+        },
+
+        separator: function () {
+	        dojo.create("span", {"class": this.separatorClass}, this.wrapperContainer);
+        },
+
+        itemWrapper: function (child) {
+                title = child.get("label") || child.get("title");
+                if (title) {
+                        var labeled = dojo.create("span", {"class": this.itemWraperClass}, this.wrapperContainer);
+                        var label = dojo.create("label", {"for": child.get("id"), "class":this.labelClass}, labeled);
+                        label.innerHTML = child.get("label") || child.get("title");
+                        labeled.appendChild(child.domNode);
+                } else {
+                        this.wrapperContainer.appendChild(this.wrapperContainer.domNode);
+                }	        
+                dojo.addClass(child.domNode, this.childClass);
+        },
+
 	layout: function(){
    	        var children = this.getChildren();
-
-		// Create the options container.
-		var optionsContainer = dojo.create("div", {"class": "optionsContainer"}, this.domNode);
-
+            
+                var oldWrapperContainer = this.wrapperContainer;
+                this.wrapper();
+                
 		// Iterate over the children, adding them to the container.
 		var first = true;
 		dojo.forEach(children, dojo.hitch(this, function(child, index){
-		   if (!first) {
-		     dojo.create("span", {"class": "optionsContainer-separator"}, optionsContainer);
-		   }
-		   first = false;
-		   var labeled = dojo.create("span", {"class": "optionsContainer-option"}, optionsContainer);
-		   var label = dojo.create("label", {"for": child.get("id"), "class":"optionsContainer-label"}, labeled);
-		   label.innerHTML = child.get("label") || child.get("title");
-		   labeled.appendChild(child.domNode);
-		   dojo.addClass(child.domNode, "optionsContainer-child");
+                        if (!first) {
+                                this.separator();
+                        }
+                        first = false;
+                        this.itemWrapper(child);
 		}));
-
-		if(this.optionsContainer) {
-			this.optionsContainer.parentNode.removeChild(this.optionsContainer);
-		}
 
 		// Refresh the layout of any child widgets, allowing them to resize
 		// to their new parent.
@@ -177,7 +194,10 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [dijit.lay
 				child.layout();
 			}
 		});
-		this.optionsContainer = optionsContainer;
+                if (oldWrapperContainer) {
+			oldWrapperContainer.parentNode.removeChild(oldWrapperContainer);
+		}
+
 		this.resize();
 	},
 	
@@ -187,3 +207,24 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [dijit.lay
 });
 
 
+
+dojo.declare("sketchSpaceDesigner.designer.widgets.MenuContainer", [sketchSpaceDesigner.designer.widgets.ListContainer], {
+        wrapper: function () {
+	        this.wrapperContainer = dojo.create("ul", {"class": "menu_left"}, this.domNode);
+        },
+
+        separator: function () {
+        },
+
+        itemWrapper: function (child) {
+                this.wrapperContainer.appendChild(this.wrapperContainer.domNode);
+        }
+});
+
+dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [sketchSpaceDesigner.designer.widgets.ListContainer], {
+        wrapperClass: "optionsContainer",
+        separatorClass: "optionsContainer-separator",
+        itemWrapperClass: "optionsContainer-option",
+        labelClass: "optionsContainer-label",
+        childClass: "optionsContainer-child"
+});

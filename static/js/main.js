@@ -332,11 +332,6 @@ exports.updatePadFromImage = function() {
     }
 
     if (zOrderUpdate.length){
-
-      var objIdArr = newOrder;
-      var idxArr = [];
-      $.each(newOrder, function(key){idxArr.push(key);});
-
       var objIdStr = "";
       var idxStr = "";
       // Create a diff between previous and current Z order
