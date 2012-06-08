@@ -13,7 +13,7 @@
 
   dojo.declare("sketchSpaceDesigner.designer.DesignerUIMenuAddTools", [dijit._Widget, dijit._Templated], {
     widgetsInTemplate: true,
-    templateString: '<span>' +
+    templateString: '<ul>' +
                     '  <li id="addEllipse" dojoAttachEvent="onclick:_onAddEllipse">' +
                     '    <a title="Add ellipse"><span class="buttonicon buttonicon-addellipse"></span></a>' +
                     '  </li>' +
@@ -29,49 +29,49 @@
                     '  <li id="addRect" dojoAttachEvent="onclick:_onAddRect">' +
                     '    <a title="Add rect"><span class="buttonicon buttonicon-addrect"></span></a>' +
                     '  </li>' +
-                    '</span>',
+                    '</ul>',
     _onAddEllipse: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.AddEllipse());
-      this.selectToolIcon("addEllipse");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.AddEllipse());
+      this.ui.selectToolIcon("addEllipse");
     },
 
     _onAddPath: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPath());
-      this.selectToolIcon("addPath");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPath());
+      this.ui.selectToolIcon("addPath");
     },
 
     _onAddPathFreehand: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPathFreehand());
-      this.selectToolIcon("addPathFreehand");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPathFreehand());
+      this.ui.selectToolIcon("addPathFreehand");
     },
 
     _onAddPathPolyline: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPathPolyline());
-      this.selectToolIcon("addPathPolyline");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.AddPathPolyline());
+      this.ui.selectToolIcon("addPathPolyline");
     },
 
     _onAddRect: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.AddRect());
-      this.selectToolIcon("addRect");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.AddRect());
+      this.ui.selectToolIcon("addRect");
     }
   });
 
   dojo.declare("sketchSpaceDesigner.designer.DesignerUIMenuSelectTools", [dijit._Widget, dijit._Templated], {
     widgetsInTemplate: true,
-    templateString: '<span>' +
+    templateString: '<ul>' +
                     '  <li id="select" dojoAttachEvent="onclick:_onSelect">' +
                     '    <a title="Select objects"><span class="buttonicon buttonicon-select"></span></a>' +
                     '  </li>' +
-                    '</span>',
+                    '</ul>',
     _onSelect: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.Select());
-      this.selectToolIcon("select");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.Select());
+      this.ui.selectToolIcon("select");
     },
   });
 
   dojo.declare("sketchSpaceDesigner.designer.DesignerUIMenuNavigationTools", [dijit._Widget, dijit._Templated], {
     widgetsInTemplate: true,
-    templateString: '<span>' +
+    templateString: '<ul>' +
                     '  <li id="pan" dojoAttachEvent="onclick:_onPan">' +
                     '    <a title="Pan"><span class="buttonicon buttonicon-pan"></span></a>' +
                     '  </li>' +
@@ -84,24 +84,24 @@
                     '  <li id="zoomOut" dojoAttachEvent="onclick:_onZoomOut">' +
                     '    <a title="Zoom out"><span class="buttonicon buttonicon-zoomout"></span></a>' +
                     '  </li>' +
-                    '</span>',
+                    '</ul>',
     _onZoomIn: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.ZoomPlus(true));
-      this.selectToolIcon("zoomIn");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.ZoomPlus(true));
+      this.ui.selectToolIcon("zoomIn");
     },
 
     _onZoomDefault: function() {
-      this.editor.surface_transform.setTransform(dojox.gfx.matrix.identity);
+      this.ui.editor.surface_transform.setTransform(dojox.gfx.matrix.identity);
     },
 
     _onZoomOut: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.ZoomPlus(false));
-      this.selectToolIcon("zoomOut");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.ZoomPlus(false));
+      this.ui.selectToolIcon("zoomOut");
     },
 
     _onPan: function() {
-      this.editor.setMode(new sketchSpaceDesigner.designer.modes.PanPlus(false));
-      this.selectToolIcon("pan");
+      this.ui.editor.setMode(new sketchSpaceDesigner.designer.modes.PanPlus(false));
+      this.ui.selectToolIcon("pan");
     }
 
   });
@@ -110,13 +110,13 @@
     widgetsInTemplate: true,
     templateString: '<div class="sketchSpaceEditorUI">' +
                     '    <div class="toolbar enabledtoolbar">' +
-                    '      <ul class="menu_left">' +
-                    '        <div id="addTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="addTools"></div>' +
-                    '        <li class="separator"></li>' +
-                    '        <div id="selectTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="selectTools"></div>' +
-                    '        <li class="separator"></li>' +
-                    '        <div id="navigationTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="navigationTools"></div>' +
-                    '      </ul>' +
+                    '      <div class="menu_left">' +
+                    '        <span id="addTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="addTools"></span>' +
+                    '        <span class="separator"></span>' +
+                    '        <span id="selectTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="selectTools"></span>' +
+                    '        <span class="separator"></span>' +
+                    '        <span id="navigationTools" dojoType="sketchSpaceDesigner.designer.widgets.ListContainer" dojoAttachPoint="navigationTools"></span>' +
+                    '      </div>' +
                     '      <ul class="menu_right">' +
                     '        <li id="syncView">' +
                     '          Sync view: <div dojoAttachPoint="shareCurrentImageOptionDiv"></div>' +
@@ -138,10 +138,10 @@
     startup: function () {
       this.inherited(arguments);
 
-      this.addTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuAddTools());
-      this.selectTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuSelectTools());
-      this.navigationTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuNavigationTools());
-      hooks.callAll("sketchSpaceDesigner_designer_DesignerUI_startup", {widget:this, arguments:arguments});
+      this.addTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuAddTools({ui:this}));
+      this.selectTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuSelectTools({ui:this}));
+      this.navigationTools.addChild(new sketchSpaceDesigner.designer.DesignerUIMenuNavigationTools({ui:this}));
+      hooks.callAll("sketchSpaceDesigner_designer_DesignerUI_startup", {ui:this, arguments:arguments});
 
       this.editor = new sketchSpaceDesigner.designer.editor.Editor(this.editorArea, this.attr("userId"), this, typeof(pad) == "undefined");
 

@@ -144,40 +144,38 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.ListContainer", [dijit.layout
 		});
 	},
 
-        wrapperClass: "listContainer",
+        baseClass: "listContainer",
         separatorClass: "listContainer-separator",
         itemWrapperClass: "listContainer-option",
         labelClass: "listContainer-label",
         childClass: "listContainer-child",
 
-        wrapper: function () {
-	        this.wrapperContainer = dojo.create("div", {"class": this.wrapperClass}, this.domNode);
-        },
-
         separator: function () {
-	        dojo.create("span", {"class": this.separatorClass}, this.wrapperContainer);
+                this.domNode.appendChild(dojo.create("span", {"class": this.separatorClass}));
         },
 
         itemWrapper: function (child) {
                 title = child.get("label") || child.get("title");
                 if (title) {
-                        var labeled = dojo.create("span", {"class": this.itemWraperClass}, this.wrapperContainer);
+                        var labeled = dojo.create("span", {"class": this.itemWraperClass}, this.domNode);
                         var label = dojo.create("label", {"for": child.get("id"), "class":this.labelClass}, labeled);
                         label.innerHTML = child.get("label") || child.get("title");
                         labeled.appendChild(child.domNode);
                 } else {
-                        this.wrapperContainer.appendChild(this.wrapperContainer.domNode);
+                        this.domNode.appendChild(child.domNode);
                 }	        
                 dojo.addClass(child.domNode, this.childClass);
         },
 
 	layout: function(){
    	        var children = this.getChildren();
-            
-                var oldWrapperContainer = this.wrapperContainer;
-                this.wrapper();
-                
-		// Iterate over the children, adding them to the container.
+
+                // Remove child dom nodes
+		dojo.forEach(dojo.map(this.domNode.childNodes, function (x) { return x; }),  dojo.hitch(this, function(child, index){
+                        this.domNode.removeChild(child);
+		}));
+
+		// Iterate over the children, (re-)adding them to the container.
 		var first = true;
 		dojo.forEach(children, dojo.hitch(this, function(child, index){
                         if (!first) {
@@ -194,9 +192,6 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.ListContainer", [dijit.layout
 				child.layout();
 			}
 		});
-                if (oldWrapperContainer) {
-			oldWrapperContainer.parentNode.removeChild(oldWrapperContainer);
-		}
 
 		this.resize();
 	},
@@ -222,7 +217,7 @@ dojo.declare("sketchSpaceDesigner.designer.widgets.MenuContainer", [sketchSpaceD
 });
 
 dojo.declare("sketchSpaceDesigner.designer.widgets.OptionsContainer", [sketchSpaceDesigner.designer.widgets.ListContainer], {
-        wrapperClass: "optionsContainer",
+        baseClass: "optionsContainer",
         separatorClass: "optionsContainer-separator",
         itemWrapperClass: "optionsContainer-option",
         labelClass: "optionsContainer-label",
