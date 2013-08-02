@@ -6,4 +6,5 @@
   "contributors": [],
   "dependencies": {},
   "engines": { "node": ">= 0.6" }
+  "repository" : { "type" : "git", "url"  : "https://github.com/redhog/ep_sketchspace.git" },
 }
